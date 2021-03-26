@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小米账号-登录</title>
+    <link rel="icon" href="//s01.mifile.cn/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/denglu.css">
+    <script src="../js/jQuery.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script>
+        $(function () {
+            $("#btn").click(() => {
+                $.ajax({
+                    type: "post",
+                    url: "denglu.php",
+                    data: {
+                        username: $(".name").val(),
+                        password: $(".password").val(),
+                    },
+                    success: (res) => {
+                        var obj = JSON.parse(res);
+                        alert(obj.message);
+                        if (obj.code == 0) {
+                            alert("马上为您跳转到首页哦，请稍等");
+                            var name = $(".name").val()
+                            var cookiestr = { name: name };
+                            $.cookie("name", JSON.stringify(cookiestr), { expires: 7 });
+                            setTimeout(() => { location.replace("index.html") }, 3000)
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-center"></div>
+    </div>
+    <div class="bg">
+        <div class="biaodan">
+            <div class="top"><span class="now ">账号登录</span><i>|</i><span><a href="zce.html">账号注册</a></span></div>
+            <form action="#">
+                <p><input type="text" placeholder="用户名" class="name"></p>
+                <p><input type="password" placeholder="密码" class="password"></p><button id='btn'><a
+                        href="">登录</a></button>
+            </form><a class="now" href="">手机短信登录</a>
+            <div class="zce"><a href="zce.html">立即注册</a><i>|</i><a href="">忘记密码？</a></div>
+        </div>
+    </div>
+</body>
+
+</html>

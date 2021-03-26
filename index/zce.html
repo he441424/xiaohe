@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小米账号-注册</title>
+    <link rel="icon" href="//s01.mifile.cn/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/denglu.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/jQuery.js"></script>
+    <script>
+        $(function () {
+            // 点击注册的时候发送数据
+            $("#btn").click(function () {
+                // 通过ajax发送数据
+                $.ajax({
+                    // 类型 post
+                    type: "post",
+                    url: "zce.php",
+                    // 把输入的账号密码传过去
+                    data: {
+                        username: $("#name").val(),
+                        password: $("#password").val(),
+                        repassword: $("#repassword").val()
+                    },
+                    success: (res) => {
+
+                        // console.log(res);
+                        var obj = JSON.parse(res);
+                        alert(obj.message)
+                        if (obj.code == 0) {
+                            let dengl = confirm("是否为你跳转登录页面")
+                            if (dengl) {
+                                location.replace("denglu.html")
+                            }
+                        }
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
+                return false;//阻止默认行为
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-center"></div>
+    </div>
+    <div class="bg">
+        <div class="biaodan">
+            <div class="top"><span><a href="denglu.html">账号登录</a></span><i>|</i><span class="now ">账号注册</span></div>
+            <form action="#">
+                <p><input type="text" placezholder="用户名" id="name"></p>
+                <p><input type="password" placeholder="密码" id="password"></p>
+                <p><input type="password" placeholder="再次输入密码" id="repassword"></p><button id='btn'><a
+                        href="">注册</a></button>
+            </form><a class="now" href="">手机短信登录</a>
+            <div class="zce"><a href="denglu.html">立即登录</a><i>|</i><a href="">忘记密码？</a></div>
+        </div>
+    </div>
+</body>
+
+</html>
